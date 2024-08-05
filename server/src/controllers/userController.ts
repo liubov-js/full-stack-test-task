@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { Request, Response } from 'express';
 import { User } from '../types';
+import { validationResult } from 'express-validator';
 
 interface QueryParams {
   email: string;
@@ -8,6 +9,12 @@ interface QueryParams {
 }
 
 export function getUsers(req: Request<{}, {}, {}, QueryParams>, res: Response) {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json(errors.array());
+  }
+  
   const { email, number } = req.query;
   
   fs.readFile('./data.json', 'utf8', (err, data) => {
@@ -21,7 +28,7 @@ export function getUsers(req: Request<{}, {}, {}, QueryParams>, res: Response) {
     try {
       const users: User[] = JSON.parse(data);
       const filteredUsers = users.filter(
-        (user) => user.email === email && user.number.toString().includes(number)
+        (user) => user.email === email && (number ? user.number === Number(number) : true)
       );
 
       setTimeout(() => res.json(filteredUsers), 5000);
