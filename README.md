@@ -8,13 +8,13 @@
 git clone https://github.com/liubov-js/full-stack-test-task.git
 ```
 
-2. Move to the server directory
+2. Go to the server directory
 
 ```shell
 cd full-stack-test-task/server
 ```
 
-3. Set PORT in .env file
+3. Set PORT in .env file (see example.env)
 
 4. Install dependencies and build 
 
@@ -29,10 +29,9 @@ npm run build
 npm start
 ```
 
-6. Move to the client directory
+6. Go to the client directory
 ```
-cd ..
-cd client
+cd ../client
 ```
 
 7. Install dependencies
